@@ -22,7 +22,7 @@ namespace HotelReservationAPI.Controllers
             _emailService = emailService;
         }
 
-        // 🔹 BUSCAR HOTELES DISPONIBLES CON FILTROS
+        //BUSCAR HOTELES DISPONIBLES CON FILTROS
         [AllowAnonymous]
         [HttpPost("search-hotels")]
         public async Task<ActionResult<IEnumerable<object>>> SearchHotels([FromBody] HotelSearchDto searchRequest)
@@ -32,7 +32,7 @@ namespace HotelReservationAPI.Controllers
 
             var hotels = await _context.Hotels
                 .Include(h => h.Rooms)
-                .Where(h => h.City.ToLower() == searchRequest.City.ToLower()) // Filtrar por ciudad
+                .Where(h => h.City.ToLower() == searchRequest.City.ToLower()) 
                 .ToListAsync();
 
             var availableHotels = hotels
@@ -44,7 +44,7 @@ namespace HotelReservationAPI.Controllers
                     h.IsActive,
                     Price = Math.Round(h.Price, 0),
                     Rooms = h.Rooms
-                        .Where(r => r.IsAvailable && r.Capacity == searchRequest.Guests) // Filtrar habitaciones adecuadas
+                        .Where(r => r.IsAvailable && r.Capacity == searchRequest.Guests) 
                         .Select(r => new
                         {
                             r.Id,
@@ -56,7 +56,7 @@ namespace HotelReservationAPI.Controllers
                         })
                         .ToList()
                 })
-                .Where(h => h.Rooms.Any()) // Solo hoteles con habitaciones disponibles
+                .Where(h => h.Rooms.Any()) 
                 .ToList();
 
             if (!availableHotels.Any())
@@ -78,7 +78,7 @@ namespace HotelReservationAPI.Controllers
             return Ok(rooms);
         }
 
-        // 🔹 CREAR RESERVA
+        // CREAR RESERVA
         [AllowAnonymous]
         [HttpPost("create")]
         public async Task<ActionResult<object>> CreateReservation([FromBody] ReservationDto reservationDto)
@@ -139,7 +139,7 @@ namespace HotelReservationAPI.Controllers
                 {
                     room.Id,
                     room.Type,
-                    Price = Math.Round(room.Price, 0), // 🔥 Redondear precio de la habitación
+                    Price = Math.Round(room.Price, 0), 
                     room.IsAvailable,
                     room.Capacity,
                     room.HotelId,
@@ -149,14 +149,14 @@ namespace HotelReservationAPI.Controllers
                         hotel.Name,
                         hotel.City,
                         hotel.IsActive,
-                        Price = Math.Round(hotel.Price, 0) // 🔥 Redondear precio del hotel
+                        Price = Math.Round(hotel.Price, 0) 
                     }
                 }
             });
         }
 
 
-        // 🔹 OBTENER DETALLE DE UNA RESERVA
+        //OBTENER DETALLE DE UNA RESERVA
         [HttpGet("{id}")]
         public async Task<ActionResult<object>> GetReservationById(int id)
         {
@@ -176,7 +176,7 @@ namespace HotelReservationAPI.Controllers
                 {
                     reservation.Room!.Id,
                     reservation.Room.Type,
-                    Price = Math.Round(reservation.Room.Price, 0), // 🔥 Redondear precio de la habitación
+                    Price = Math.Round(reservation.Room.Price, 0), 
                     reservation.Room.IsAvailable,
                     reservation.Room.Capacity,
                     reservation.Room.HotelId,
@@ -186,7 +186,7 @@ namespace HotelReservationAPI.Controllers
                         reservation.Room.Hotel.Name,
                         reservation.Room.Hotel.City,
                         reservation.Room.Hotel.IsActive,
-                        Price = Math.Round(reservation.Room.Hotel.Price, 0) // 🔥 Redondear precio del hotel
+                        Price = Math.Round(reservation.Room.Hotel.Price, 0) 
                     }
                 },
                 reservation.PassengerName,
@@ -198,7 +198,7 @@ namespace HotelReservationAPI.Controllers
         }
 
 
-        // 🔹 LISTAR RESERVAS DE UN HOTEL
+        //LISTAR RESERVAS DE UN HOTEL
         [HttpGet("hotel/{hotelId}")]
         public async Task<ActionResult<IEnumerable<object>>> GetReservationsByHotel(int hotelId)
         {
@@ -219,7 +219,7 @@ namespace HotelReservationAPI.Controllers
                 {
                     Id= r.Room!.Id,
                     r.Room.Type,
-                    Price = Math.Round(r.Room.Price, 0), // 🔥 Redondear precio de la habitación
+                    Price = Math.Round(r.Room.Price, 0),
                     r.Room.IsAvailable,
                     r.Room.Capacity,
                     r.Room.HotelId,
@@ -229,7 +229,7 @@ namespace HotelReservationAPI.Controllers
                         r.Room.Hotel.Name,
                         r.Room.Hotel.City,
                         r.Room.Hotel.IsActive,
-                        Price = Math.Round(r.Room.Hotel.Price, 0) // 🔥 Redondear precio del hotel
+                        Price = Math.Round(r.Room.Hotel.Price, 0) 
                     }
                 }
             });

@@ -100,7 +100,7 @@ namespace HotelReservationAPI.Controllers
                 })
                 .ToListAsync();
 
-            return Ok(hotels); // Devuelve un JSON con los datos
+            return Ok(hotels);
         }
 
         // Obtener un hotel por ID
@@ -116,12 +116,12 @@ namespace HotelReservationAPI.Controllers
                     h.Name,
                     h.City,
                     h.IsActive,
-                    Price = (int)h.Price, // Redondear precio
+                    Price = (int)h.Price, 
                     Rooms = h.Rooms.Select(r => new
                     {
                         r.Id,
                         r.Type,
-                        Price = (int)r.Price, // Redondear precio
+                        Price = (int)r.Price,
                         r.IsAvailable,
                         r.Capacity,
                         r.HotelId,
@@ -155,14 +155,14 @@ namespace HotelReservationAPI.Controllers
         public async Task<IActionResult> DeleteHotel(int hotelId)
         {
             var hotel = await _context.Hotels
-                .Include(h => h.Rooms) // Incluir habitaciones asociadas
+                .Include(h => h.Rooms) 
                 .FirstOrDefaultAsync(h => h.Id == hotelId);
 
             if (hotel == null)
                 return NotFound("Hotel not found.");
 
-            _context.Rooms.RemoveRange(hotel.Rooms); // Eliminar todas las habitaciones del hotel
-            _context.Hotels.Remove(hotel); // Eliminar el hotel
+            _context.Rooms.RemoveRange(hotel.Rooms); 
+            _context.Hotels.Remove(hotel); 
 
             await _context.SaveChangesAsync();
 

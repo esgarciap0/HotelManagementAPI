@@ -40,7 +40,7 @@ public class EmailService
             smtp.Credentials = new NetworkCredential(smtpUser, smtpPassword);
             smtp.EnableSsl = true;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.TargetName = "STARTTLS/smtp.office365.com"; // Necesario para Office365
+            smtp.TargetName = "STARTTLS/smtp.office365.com"; 
 
 
 

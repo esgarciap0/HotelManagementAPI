@@ -10,8 +10,7 @@ namespace HotelReservationAPI.Data
     {
         public HotelContext(DbContextOptions<HotelContext> options) : base(options) { }
 
-        // Definir las tablas en la base de datos
-       //ublic DbSet<Agency> Agencies { get; set; }
+    
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Reservation> Reservations { get; set; }

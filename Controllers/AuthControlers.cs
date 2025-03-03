@@ -19,7 +19,7 @@ namespace HotelReservationAPI.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
+        // Registrar Agencia
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDto model)
         {
@@ -30,7 +30,7 @@ namespace HotelReservationAPI.Controllers
 
             return Ok(new { message = "User registered successfully" });
         }
-        // 📌 INICIO DE SESIÓN (Login)
+        //INICIO DE SESIÓN (Login)
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
@@ -42,6 +42,7 @@ namespace HotelReservationAPI.Controllers
 
             return Ok(new { message = "Login successful" });
         }
+        //Logout
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {

@@ -6,7 +6,6 @@ namespace HotelReservationAPI.Models
     {
         public string Name { get; set; } = string.Empty;
 
-        // Relación con Reservaciones
         public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
     }
 }

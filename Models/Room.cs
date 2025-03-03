@@ -13,11 +13,11 @@ namespace HotelReservationAPI.Models
         public int Capacity { get; set; }
         public string Location {get; set; } = string.Empty;
 
-        // Relación con Hotel
+       
         public int HotelId { get; set; }
         public Hotel? Hotel { get; set; }
 
-        // Relación con Reservaciones
+        
         public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
     }
 }

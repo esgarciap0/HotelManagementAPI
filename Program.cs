@@ -24,7 +24,7 @@ builder.Services.AddIdentity<Agency, IdentityRole>()
     .AddDefaultTokenProviders();
 
 // Registrar servicios de autenticación y autorización
-builder.Services.AddScoped<UserManager<Agency>>();  // REGISTRA UserManager
+builder.Services.AddScoped<UserManager<Agency>>(); 
 builder.Services.AddScoped<SignInManager<Agency>>();
 
 // Configurar autenticación basada en cookies
@@ -59,7 +59,6 @@ builder.Services.AddSingleton<EmailService>();
 
 var app = builder.Build();
 
-// Configurar Swagger solo en desarrollo
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

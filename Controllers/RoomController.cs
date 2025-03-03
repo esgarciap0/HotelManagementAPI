@@ -25,7 +25,7 @@ namespace HotelReservationAPI.Controllers
         {
             var rooms = await _context.Rooms
                 .Where(r => r.HotelId == hotelId)
-                .Include(r => r.Hotel) // Incluir los datos del hotel
+                .Include(r => r.Hotel)
                 .Select(r => new
                 {
                     r.Id,
@@ -48,15 +48,15 @@ namespace HotelReservationAPI.Controllers
             var hotel = await _context.Hotels.FindAsync(roomDto.HotelId);
             if (hotel == null) return NotFound("El hotel no existe.");
 
-            // 🔹 Crear la habitación con impuestos incluidos y ubicación
+            
             var room = new Room
             {
                 Type = roomDto.Type,
-                Price = Math.Round(roomDto.BasePrice * 1.19m, 0), // 🔥 Aplicar el 19% de impuestos
+                Price = Math.Round(roomDto.BasePrice * 1.19m, 0), 
                 IsAvailable = roomDto.IsAvailable,
                 Capacity = roomDto.Capacity,
                 HotelId = roomDto.HotelId,
-                Location = roomDto.Location // 🔥 Guardar la ubicación dentro del hotel
+                Location = roomDto.Location 
             };
 
             _context.Rooms.Add(room);
@@ -73,13 +73,12 @@ namespace HotelReservationAPI.Controllers
             if (room == null)
                 return NotFound("Room not found.");
 
-            // Aplicar los cambios a la habitación
+            
             room.Type = updatedRoomDto.Type;
-            room.Price = Math.Round(updatedRoomDto.BasePrice * 1.19m, 0); // Aplicar el 19% de impuestos
+            room.Price = Math.Round(updatedRoomDto.BasePrice * 1.19m, 0); 
             room.IsAvailable = updatedRoomDto.IsAvailable;
             room.Capacity = updatedRoomDto.Capacity;
-            room.Location = updatedRoomDto.Location ?? room.Location; // Mantener la ubicación si no se envía
-
+            room.Location = updatedRoomDto.Location ?? room.Location; 
             await _context.SaveChangesAsync();
 
             return Ok(new
@@ -101,7 +100,7 @@ namespace HotelReservationAPI.Controllers
                 return NotFound(new { Error = "Room not found for this hotel." });
             }
 
-            // Cambiar el estado de disponibilidad
+            
             room.IsAvailable = !room.IsAvailable;
             _context.Rooms.Update(room);
             await _context.SaveChangesAsync();
@@ -114,7 +113,7 @@ namespace HotelReservationAPI.Controllers
         public async Task<IActionResult> DeleteRoom(int hotelId, int roomId)
         {
             var room = await _context.Rooms
-                .Include(r => r.Reservations) // Verificar si tiene reservas
+                .Include(r => r.Reservations) 
                 .FirstOrDefaultAsync(r => r.Id == roomId && r.HotelId == hotelId);
 
             if (room == null)

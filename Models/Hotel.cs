@@ -13,7 +13,7 @@ namespace HotelReservationAPI.Models
         public string City { get; set; } = string.Empty;
         public bool IsActive { get; set; } = true;
         [JsonPropertyName("price")]
-        [Precision(18, 2)]// Limita el número de decimales en la base de datos
+        [Precision(18, 2)]
         public decimal Price { get; set; }
         public ICollection<Room> Rooms { get; set; } = new List<Room>();
     }
